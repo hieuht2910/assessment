@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <h2>Order Status Updates</h2>
+    <div>
+        <label for="orderId">Order ID:</label>
+        <input type="number" id="orderId" value="3"/>
+        <button onclick="connect()">Connect</button>
+        <button onclick="disconnect()">Disconnect</button>
+    </div>
+    <div>
+        <h3>Connection Status:</h3>
+        <pre id="connectionStatus">Disconnected</pre>
+    </div>
+    <div>
+        <h3>Messages:</h3>
+        <pre id="messages"></pre>
+    </div>
+
+    <script>
+        let stompClient = null;
+
+        function connect() {
+            const orderId = document.getElementById('orderId').value;
+            const socket = new WebSocket('ws://localhost:8080/ws');
+            stompClient = Stomp.over(socket);
+
+            // Enable debug logging
+            stompClient.debug = function(str) {
+                console.log(str);
+                document.getElementById('connectionStatus').innerHTML += str + '\n';
+            };
+
+            stompClient.connect({}, function(frame) {
+                document.getElementById('connectionStatus').innerHTML = 'Connected: ' + frame + '\n';
+                console.log('Connected: ' + frame);
+
+                // Subscribe to the topic
+                stompClient.subscribe('/topic/order.' + orderId, function(message) {
+                    console.log('Received message:', message);
+                    const order = JSON.parse(message.body);
+                    document.getElementById('messages').innerHTML += 
+                        `Order ${order.id} status updated to: ${order.status}\n`;
+                });
+            }, function(error) {
+                console.error('STOMP error:', error);
+                document.getElementById('connectionStatus').innerHTML += 'Error: ' + error + '\n';
+            });
+        }
+
+        function disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+                document.getElementById('connectionStatus').innerHTML = 'Disconnected\n';
+                document.getElementById('messages').innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html> 
