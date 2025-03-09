@@ -23,7 +23,7 @@ The system follows a microservices architecture with the following key component
    - Redis Cache: Real-time data and session management
    - PostgreSQL: Persistent data storage
 
-### Key Flows
+### Key Flows (Implemented in Order Service)
 
 1. **Order Processing Flow**
 ![order-processing-diagram.png](diagrams/order-processing-diagram.png)
@@ -107,32 +107,49 @@ The system follows a microservices architecture with the following key component
 ### BDD Testing with Cucumber
 We use Behavior-Driven Development (BDD) with Cucumber for testing our application. The test scenarios are written in Gherkin syntax, making them readable by both technical and non-technical stakeholders.
 
-#### Key Test Features
+## Key Test Features
 
 1. **Order Queue Management** (`order_queue_management.feature`)
+File: [order_queue_management.feature](test-scenarios/src/test/resources/features/order_queue_management.feature)
    - Tests queue creation and order tracking
    - Validates queue position and waiting time
    - Ensures proper queue size management
 
 2. **Order Processing and Real-time Tracking** (`order_processing_and_tracking.feature`)
+File: [order_processing_and_tracking.feature](test-scenarios/src/test/resources/features/order_processing_and_tracking.feature)
    - Tests end-to-end order processing
    - Validates WebSocket notifications
    - Ensures proper status transitions
 
-#### Test Scenarios Coverage
+## Test Scenarios Coverage
 
 1. **Queue Management Tests**
+File: [order_queue_management.feature](test-scenarios/src/test/resources/features/order_queue_management.feature)
    - ORDER-001: Single order queue creation and tracking
    - ORDER-002: Multiple orders queue management
    - ORDER-003: Order status update notifications
 
 2. **Order Processing Tests**
+File: [order_processing_and_tracking.feature](test-scenarios/src/test/resources/features/order_processing_and_tracking.feature)
    - ORDER-004: Complete order processing flow with WebSocket updates
    - ORDER-005: Order cancellation with real-time notifications
 
 ### Testing Application
 
 1. **Local with Docker Compose**
+- Run the following command to start the application with Docker Compose:
+```bash
+docker compose -f docker-compose-app.yml up --build -d
+```
+It will start all required services (PostgreSQL, RabbitMQ),
+And Start the application running on 8080 port.
+And Run the Cucumber tests.
+And copy the report to the host machine under current folder as `cucumber-report.html`.
+![docker-local.png](diagrams/docker-local.png)
+
+Sample test results:
+[cucumber-reports.html](cucumber-reports.html)
+
 2. **Public API Testing**
    - Postman collection for API testing
    - Environment variables for easy configuration
