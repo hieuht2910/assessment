@@ -53,6 +53,7 @@ The system follows a microservices architecture with the following key component
    14. Order Service broadcasts the status update to WebSocket
    15. WebSocket sends the order status update ("READY") to the Customer
 
+
 2. **Order Cancellation Flow**
 
 (Note: Shop Service here is a placeholder for the actual service that processes the order)
