@@ -9,7 +9,7 @@
     <h2>Order Status Updates</h2>
     <div>
         <label for="orderId">Order ID:</label>
-        <input type="number" id="orderId" value="3"/>
+        <input type="number" id="orderId" value=""/>
         <button onclick="connect()">Connect</button>
         <button onclick="disconnect()">Disconnect</button>
     </div>
@@ -27,7 +27,7 @@
 
         function connect() {
             const orderId = document.getElementById('orderId').value;
-            const socket = new WebSocket('ws://localhost:8080/ws');
+            const socket = new WebSocket('ws://3.106.230.155:8080/ws');
             stompClient = Stomp.over(socket);
 
             // Enable debug logging
