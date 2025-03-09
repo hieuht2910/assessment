@@ -153,15 +153,18 @@ File: [order_processing_and_tracking.feature](test-scenarios/src/test/resources/
 ```bash
 docker compose -f docker-compose-app.yml up --build -d
 ```
+or (docker compose or docker-compose)
+```bash
+docker-compose -f docker-compose-app.yml up --build -d
+```
 It will start all required services (PostgreSQL, RabbitMQ),
+
 And Start the application running on 8080 port.
+
 And Run the Cucumber tests.
+
 And copy the report to the host machine under current folder as `cucumber-report.html`.
 ![docker-local.png](diagrams/docker-local.png)
 
 Sample test results:
 [cucumber-reports.html](cucumber-reports.html)
-
-2. **Public API Testing**
-
-   
