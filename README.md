@@ -23,9 +23,17 @@ The system follows a microservices architecture with the following key component
    - Redis Cache: Real-time data and session management
    - PostgreSQL: Persistent data storage
 
+### Project structures
+- Diagrams folder: Contains the architecture diagrams
+- Order-Service: Contains the Order Service implementation
+- Test-Scenarios: Contains the Cucumber test scenarios
+
 ### Key Flows (Implemented in Order Service)
 
 1. **Order Processing Flow**
+
+(Note: Shop Service here is a placeholder for the actual service that processes the order)
+
 ![order-processing-diagram.png](diagrams/order-processing-diagram.png)
 
    Step-by-step breakdown of the order processing flow:
@@ -46,6 +54,9 @@ The system follows a microservices architecture with the following key component
    15. WebSocket sends the order status update ("READY") to the Customer
 
 2. **Order Cancellation Flow**
+
+(Note: Shop Service here is a placeholder for the actual service that processes the order)
+
 ![order-cancel-diagram.png](diagrams/order-cancel-diagram.png)
    Step-by-step breakdown of the order cancellation flow:
    1. Customer sends a PUT request to /api/orders/{orderId}/cancel endpoint of the Order Service
@@ -151,6 +162,5 @@ Sample test results:
 [cucumber-reports.html](cucumber-reports.html)
 
 2. **Public API Testing**
-   - Postman collection for API testing
-   - Environment variables for easy configuration
+
    
